@@ -1,0 +1,63 @@
+version: "3"
+
+services:
+  limit-request-redis:
+    container_name: limit-request-redis
+    image: redis:5
+    command: redis-server --appendonly yes
+    volumes:
+      - ./data/redis_data:/data
+    networks:
+      - limit-request
+
+  user-service-mysql-master:
+    container_name: limit-request-mysql-master
+    build:
+      context: .
+      dockerfile: docker/mysql/Dockerfile
+    command: mysqld --default-authentication-plugin=mysql_native_password --sql_mode=""
+    restart: unless-stopped
+    volumes:
+      - ./sql/limit-request.prod.sql:/docker-entrypoint-initdb.d/limit-request.prod.sql
+    security_opt:
+      - seccomp:unconfined
+    ports:
+      - "3318:3306"
+    networks:
+      - limit-request
+    
+  limit-request-nodejs:
+    container_name: limit-request-nodejs
+    build:
+      context: .
+      dockerfile: docker/nodejs/Dockerfile
+    environment:
+      - MYSQL_DATABASE=limit-request
+      - MYSQL_MASTER_HOST=limit-request-mysql-master
+      - MYSQL_MASTER_USER=root
+      - MYSQL_MASTER_PASSWORD=root
+      - MYSQL_PORT=3306
+      - REDIS_HOST=limit-request-redis
+      - REDIS_PORT=6379
+
+    restart: always
+    volumes:
+      - "./app/public/uploads:/app/app/public/uploads"
+      - "./logs:/home/backend/log"
+    ports:
+      - "7012:7012"
+    entrypoint: /entrypoint.sh -d limit-request-mysql-master:3306 -c 'yarn build && yarn tsc && yarn migration:run:prod && yarn start';
+    links:
+      - limit-request-mysql
+      - limit-request-redis
+    networks:
+      - limit-request
+
+volumes:
+  sql:
+    driver: local
+  redis_data:
+    driver: local
+networks:
+  limit-request:
+    driver: bridge
