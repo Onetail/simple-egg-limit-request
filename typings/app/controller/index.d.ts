@@ -2,10 +2,28 @@
 // Do not modify this file!!!!!!!!!
 
 import 'egg';
-import ExportHome from '../../../app/controller/home';
+import ExportApi from '../../../app/controller/api';
+import ExportIpRecord from '../../../app/controller/ipRecord';
+import ExportEnumIpRecord from '../../../app/controller/enum/ipRecord';
+import ExportDocsResIpRecord from '../../../app/controller/docs/Res/ipRecord';
+import ExportDocsResUtilHttpMessage from '../../../app/controller/docs/Res/util/httpMessage';
+import ExportDocsResUtilHttpStatus from '../../../app/controller/docs/Res/util/httpStatus';
 
 declare module 'egg' {
   interface IController {
-    home: ExportHome;
+    api: ExportApi;
+    ipRecord: ExportIpRecord;
+    enum: {
+      ipRecord: ExportEnumIpRecord;
+    }
+    docs: {
+      res: {
+        ipRecord: ExportDocsResIpRecord;
+        util: {
+          httpMessage: ExportDocsResUtilHttpMessage;
+          httpStatus: ExportDocsResUtilHttpStatus;
+        }
+      }
+    }
   }
 }
