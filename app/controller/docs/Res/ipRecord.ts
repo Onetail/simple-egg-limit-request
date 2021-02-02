@@ -48,3 +48,19 @@ export const GetIpRecordLimitCountResponse = {
     },
   },
 };
+
+export const GetUserIpResponse = {
+  type: 'object',
+  properties: {
+    body: {
+      type: 'object',
+      properties: {
+        ip: {
+          type: 'string',
+          example: '127.0.0.1',
+          description: 'user ip',
+        },
+      },
+    },
+  },
+};

@@ -3,6 +3,7 @@
 
 import 'egg';
 import ExportApi from '../../../app/controller/api';
+import ExportIpCacheRecord from '../../../app/controller/ipCacheRecord';
 import ExportIpRecord from '../../../app/controller/ipRecord';
 import ExportEnumIpRecord from '../../../app/controller/enum/ipRecord';
 import ExportDocsResIpRecord from '../../../app/controller/docs/Res/ipRecord';
@@ -12,6 +13,7 @@ import ExportDocsResUtilHttpStatus from '../../../app/controller/docs/Res/util/h
 declare module 'egg' {
   interface IController {
     api: ExportApi;
+    ipCacheRecord: ExportIpCacheRecord;
     ipRecord: ExportIpRecord;
     enum: {
       ipRecord: ExportEnumIpRecord;

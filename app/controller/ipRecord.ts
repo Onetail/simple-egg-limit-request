@@ -1,14 +1,6 @@
 import { Controller } from 'egg';
-import {
-  TagsAll,
-  Prefix,
-  Post,
-  Get,
-  Before,
-  Responses,
-} from 'egg-shell-decorators';
+import { TagsAll, Prefix, Post, Get, Responses } from 'egg-shell-decorators';
 import 'moment-timezone';
-import { validateIpRecordPostBody } from '../middleware/validateIpRecord';
 import {
   GetIpRecordLimitCountResponse,
   PostIpRecordResponse,
@@ -19,7 +11,6 @@ import { IpRecordMaxLimit } from './enum/ipRecord';
 @TagsAll('ipRecord')
 @Prefix('ipRecord')
 export default class IpRecordController extends Controller {
-  @Before([validateIpRecordPostBody])
   @Post('/')
   @Responses({
     200: {
@@ -52,8 +43,7 @@ export default class IpRecordController extends Controller {
     };
   }
 
-  @Before([validateIpRecordPostBody])
-  @Get('/')
+  @Get('/count')
   @Responses({
     200: {
       description: '登入成功',
@@ -67,6 +57,23 @@ export default class IpRecordController extends Controller {
     const result = await ctx.service.ipRecord.findIpCountByIp(ctx.request.ip);
     ctx.body = {
       body: { count: result },
+    };
+  }
+
+  @Get('/userIp')
+  @Responses({
+    200: {
+      description: '登入成功',
+      schema: {
+        ...GetIpRecordLimitCountResponse,
+      },
+    },
+  })
+  public async getUserIp() {
+    const { ctx } = this;
+
+    ctx.body = {
+      body: { ip: ctx.request.ip },
     };
   }
 }

@@ -28,13 +28,13 @@ export default () => {
     timezone: '+08:00',
   };
 
+  config.proxy = true;
+
   config.jwt = {
     secret: 'USERSERVICE_JWT_CREATEDBY2020',
   };
 
   config.expiredTime = {
-    email: 10, // mins
-    sms: 10, // mins
     jwt: '86400000', // 1天
   };
 
