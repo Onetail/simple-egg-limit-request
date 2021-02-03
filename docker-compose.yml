@@ -33,9 +33,9 @@ services:
       dockerfile: docker/nodejs/Dockerfile
     environment:
       - MYSQL_DATABASE=limit-request
-      - MYSQL_MASTER_HOST=limit-request-mysql
-      - MYSQL_MASTER_USER=root
-      - MYSQL_MASTER_PASSWORD=root
+      - MYSQL_HOST=limit-request-mysql
+      - MYSQL_USER=root
+      - MYSQL_PASSWORD=root
       - MYSQL_PORT=3306
       - REDIS_HOST=limit-request-redis
       - REDIS_PORT=6379
