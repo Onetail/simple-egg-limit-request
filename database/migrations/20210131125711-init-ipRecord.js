@@ -8,7 +8,7 @@ module.exports = {
       tableName,
       {
         id: { type: INTEGER, primaryKey: true, autoIncrement: true },
-        loginIp: STRING(20),
+        loginIp: STRING(128),
         createdAt: {
           type: DATE,
           defaultValue: Sequelize.literal('NOW()'),
