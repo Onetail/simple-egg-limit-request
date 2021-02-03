@@ -14,7 +14,7 @@ export default () => {
   config.sequelize = {
     dialect: 'mysql',
     host: process.env.MYSQL_HOST,
-    port: process.env.MYSQL_PORT,
+    port: 3306,
     database: process.env.MYSQL_DATABASE || 'limit-request',
     username: process.env.MYSQL_USER,
     password: process.env.MYSQL_PASSWORD,
