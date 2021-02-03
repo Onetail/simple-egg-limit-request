@@ -33,7 +33,7 @@ services:
       dockerfile: docker/nodejs/Dockerfile
     environment:
       - MYSQL_DATABASE=limit-request
-      - MYSQL_MASTER_HOST=limit-request-mysql-master
+      - MYSQL_MASTER_HOST=limit-request-mysql
       - MYSQL_MASTER_USER=root
       - MYSQL_MASTER_PASSWORD=root
       - MYSQL_PORT=3306
@@ -45,7 +45,7 @@ services:
       - "./logs:/home/backend/log"
     ports:
       - "7012:7012"
-    entrypoint: /entrypoint.sh -d limit-request-mysql-master:3306 -c 'yarn build && yarn ci && yarn migration:run:prod && yarn start';
+    entrypoint: /entrypoint.sh -d limit-request-mysql:3306 -c 'yarn build && yarn ci && yarn migration:run:prod && yarn start';
     links:
       - limit-request-mysql
       - limit-request-redis
