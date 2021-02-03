@@ -10,8 +10,8 @@ services:
     networks:
       - limit-request
 
-  user-service-mysql-master:
-    container_name: limit-request-mysql-master
+  limit-request-mysql:
+    container_name: limit-request-mysql
     build:
       context: .
       dockerfile: docker/mysql/Dockerfile
@@ -46,7 +46,7 @@ services:
       - "./logs:/home/backend/log"
     ports:
       - "7012:7012"
-    entrypoint: /entrypoint.sh -d limit-request-mysql-master:3306 -c 'yarn build && yarn tsc && yarn migration:run:prod && yarn start';
+    entrypoint: /entrypoint.sh -d limit-request-mysql-master:3306 -c 'yarn build && yarn ci && yarn migration:run:prod && yarn start';
     links:
       - limit-request-mysql
       - limit-request-redis
