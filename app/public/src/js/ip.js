@@ -1,7 +1,7 @@
 const serverHead = 'http';
-const serverHost = '127.0.0.1';
-const serverPort = 7012;
-const apiVer = 'api/v1';
+const serverHost = 'www.wayne-chu.com';
+const serverPort = 80;
+const apiVer = '7012/api/v1';
 
 $(document).ready(async function() {
   await postMyIp();
